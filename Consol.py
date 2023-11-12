@@ -234,7 +234,6 @@ OPERATIONSN = {
 
 def get_handler(nb, nl, operator):
     com_attr = operator.split()
-    print(com_attr)
     command = com_attr[0].lower()
     if command in OPERATIONS:
         OPERATIONS[com_attr[0]](nb, com_attr) # ?? maybe without parameters
