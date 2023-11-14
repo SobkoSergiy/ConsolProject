@@ -5,7 +5,7 @@ from Fields import Address, Birthday, Email, Phone, Name
 
 class Phones:
     def __init__(self):
-        self.data = []    # [:Phone] list(Phone)
+        self.data = []   
 
     def index_phone(self, phone: str) -> int:
         i = 0
@@ -23,7 +23,7 @@ class Phones:
         if indx > -1:
             self.data[indx] = Phone(newphone)
         else:
-            self.add_phone(newphone)    # ???
+            self.add_phone(newphone) 
 
     def remove_phone(self, phone):
         indx = self.index_phone(self, phone)
@@ -72,8 +72,8 @@ class Record:
         today = date.today()    # today datetime.date(2007, 12, 5)
         bday = bday.replace(year = today.year)
         if bday < today:
-            bday = bday.replace(year = today.year + 1)  # birthday = datetime.date(2008, 6, 24)
-        return (bday - today).days     # to_birthday = abs(bday - today)
+            bday = bday.replace(year = today.year + 1)  
+        return (bday - today).days     
 
     def set_email(self, value):
         self.email.value = value
@@ -84,8 +84,8 @@ class Record:
 
 class AddressBook(UserDict):
     def __init__(self):
-        super().__init__()      # ??????
-        self.data = {}          # ?????
+        super().__init__()    
+        self.data = {}        
         self.start = 0
 
     def show_records(self):
@@ -99,9 +99,9 @@ class AddressBook(UserDict):
     def add_record(self, newrec):
         self.data[newrec.name.value] = newrec
             
-    def delete_record(self, name): # delete_record
+    def delete_record(self, name):
         if self.find_record(name):
-            del(self.data[name]) # self.data.pop(cl[1])  # popitem()
+            del(self.data[name]) 
         else:
             raise ValueError(f"ERROR: name '{name}' not found")
 
@@ -140,7 +140,7 @@ class AddressBook(UserDict):
             for raw in raws:
                 al = raw[:-1].split("|")
                 # print(al)
-                rec = Record(al[0]) # al[0] - name
+                rec = Record(al[0]) 
                 rec.birthday = Birthday()  
                 rec.birthday.value = al[1]  
                 rec.email = Email() 
@@ -173,7 +173,6 @@ class AddressBook(UserDict):
     
     def get_birthdays_per_week(self, users):
         week_list = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-        print("\n ** get_birthdays_per_week **")
         cur_date = date.today()   # value.strftime('%A %d %B %Y')
         print(f"{cur_date=}  {cur_date.weekday()}:{week_list[cur_date.weekday()]}")
         delta = timedelta(days=1)
@@ -211,8 +210,6 @@ class AddressBook(UserDict):
         if days < 0:
             raise ValueError(f"ERROR: name '{name}': birthday not specified")
         print(f"{name}: days for bithday - {days}")
-
-
 
     def bdayafter_func(self, n): # showbday n : contact list with birthday after n days
         for rec in self.data:
