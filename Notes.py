@@ -53,7 +53,7 @@ class Note:
 
 class Notes:
     def __init__(self):
-        self.notes = []  # list(Note())
+        self.notes = [] 
 
     def find_note(self, key) -> Note: # == get(name)
         for n in self.notes:
@@ -65,7 +65,6 @@ class Notes:
         self.notes.sort(key=lambda key: key.value)
 
     def show_notes(self):    
-        print("nl.show_note")
         for i in self.notes:
             print(i) 
 
