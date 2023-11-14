@@ -203,10 +203,8 @@ OPERATIONSC = {
     'delcont': delcont_func,
     'editcont': editcont_func,
     'findcont': findcont_func,
-
     'setbday': setbday_func,
     'showbday': showbday_func,
-
     'setaddr': setaddr_func,
     'setemail': setemail_func,
     'addphone': addcont_func,
@@ -220,13 +218,11 @@ OPERATIONSN = {
     'addnote': addnote_func,
     'delnote': delnote_func,
     'editkey': editkey_func,
-
     'showtag': showtag_func,
     'addtag': addtag_func,
     'deltag': deltag_func,
     'edittag': edittag_func,
     'findtag': findtag_func,
-
     'settext': settext_func,
     'addtext': addtext_func,
     'findtext': findtext_func
@@ -236,7 +232,7 @@ def get_handler(nb, nl, operator):
     com_attr = operator.split()
     command = com_attr[0].lower()
     if command in OPERATIONS:
-        OPERATIONS[com_attr[0]](nb, com_attr) # ?? maybe without parameters
+        OPERATIONS[com_attr[0]](nb, com_attr)
     elif command in OPERATIONSC:
         OPERATIONSC[com_attr[0]](nb, com_attr)
     elif command in OPERATIONSN:
@@ -246,7 +242,7 @@ def get_handler(nb, nl, operator):
 
 
 def main():
-    print("\n\n>>> main <Consol 0.0.1>")
+    print("\n\n>>><Consol 0.0.1>")
 
     file_dir = Path(__file__)
     
