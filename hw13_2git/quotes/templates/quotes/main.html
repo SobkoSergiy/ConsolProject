@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home Work Quotes</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'quotes/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'quotes/main.css' %}">
+</head>
+
+<body>
+    <div class="container">
+
+        {% load extract %}
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row header-box">
+                    <h1><a href="/" style="text-decoration: none">Home Work: Quotes</a></h1>
+                </div>
+
+                {% if curtag != '' %}
+                    <h4 style="text-align: left">Quotes for tag <b>{{ curtag }}</b></h4>
+                {% endif %}
+
+                {% for quote in quotes %}
+                    <div class="quote">
+                        <span class="text" itemprop="text">{{quote.quote}}</span>
+                        <span>by <small class="author" itemprop="author">{{quote.author.fullname}}</small>
+                            <a href="{% url 'quotes:author_show' quote.author.id %}" role="button">(about)</a>
+                        </span>
+                        <div class="tags">
+                            Tags:
+                            {% for tag in quote.tags|get_tags %}
+                            {# <a class="tag" href="/{{tag}}">{{tag}}</a> #}
+                            <a class="tag" href="{% url 'quotes:main_tag' tag %}">{{tag}}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <li>No quotes</li>
+                {% endfor %}
+
+                <nav>
+                    <ul class="pager">
+                        {% if curtag == '' %}
+                        {% if quotes.has_previous %}
+                        <li class="previous">
+                            <a href="{% url 'quotes:main_paginate' 1 %}">First</a>
+                        </li>
+                        <li class="previous">
+                            <a href="{% url 'quotes:main_paginate' quotes.previous_page_number %}"><span
+                                    aria-hidden="true">&laquo;</span> Previous</a>
+                        </li>
+                        {% endif %}
+
+                        <li class="tags">
+                            Page {{ quotes.number }} of {{ quotes.paginator.num_pages }}.
+                        </li>
+
+                        {% if quotes.has_next %}
+                        <li class="next">
+                            <a href="{% url 'quotes:main_paginate' quotes.paginator.num_pages %}">Last</a>
+                        </li>
+                        <li class="next">
+                            <a href="{% url 'quotes:main_paginate' quotes.next_page_number %}">Next<span
+                                    aria-hidden="true"> &raquo;</span></a>
+                        </li>
+                        {% endif %}
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-md-4 tags-box">
+                <div class="row header-box">
+                    <p style="height: 30px"> </p>
+                </div>
+
+                <h2 style="text-align: center">Top Ten tags</h2>
+                {% if toptags.0.t != '_' %}
+                    {% for toptag in toptags %}
+                    <span class="tag-item" style="text-align: center">
+                        <a class="tag" style="font-size: {{toptag.s}}px" href="{% url 'quotes:main_tag' toptag.t %}">{{toptag.n}}</a>
+                    </span>
+                    {% endfor %}
+                    <hr style="height: 2px; width: 50%">
+                {% endif %}
+
+                <!-- <span class="tag-item" style="text-align: center">
+                    <a class="tag tt1"  
+                    href="{% url 'quotes:main_tag' toptags.0.t %}">{{toptags.0.n}}</a>
+                </span>
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag tt2" 
+                        href="{% url 'quotes:main_tag' toptags.1.t %}">{{toptags.1.n}}</a>
+                </span>
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag tt3" 
+                        href="{% url 'quotes:main_tag' toptags.2.t %}">{{toptags.2.n}}</a>
+                </span> -->
+
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag" style="font-size: 22px" href="{% url 'quotes:t10tag' %}">Update Top Ten tags</a>
+                </span>
+                <hr style="height: 4px; width: 80%">
+
+                {% if user.is_authenticated %}
+                <h3 style="text-align: center">Welcome <b>{{ user.username }}!</b></h3>
+
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag" style="font-size: 22px" href="{% url 'users:logout' %}" role="button">Logout</a>
+                </span>
+                <hr style="height: 2px;">
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag" style="font-size: 22px" href="{% url 'quotes:author' %}" role="button">Add author</a>
+                </span>
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag" style="font-size: 22px" href="{% url 'quotes:tag' %}" role="button">Add tag</a>
+                </span>
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag" style="font-size: 22px" href="{% url 'quotes:quote' %}" role="button">Add quotes</a>
+                </span>
+
+                {% else %}
+                <h3 style="text-align: center">Sign Up or Login:</h3>
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag" style="font-size: 22px" href="{% url 'users:signup' %}" role="button">Sign Up</a>
+                </span>
+                <span class="tag-item" style="text-align: center">
+                    <a class="tag" style="font-size: 22px" href="{% url 'users:login' %}" role="button">Login</a>
+                </span>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">
+                Quotes by: <a href="https://www.goodreads.com/quotes">GoodReads.com</a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
